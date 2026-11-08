@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Aisyah ♡</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: Georgia, serif;
+    background: radial-gradient(circle, #f5eaff, #d9b8f2);
+    color: #8051a7;
+    transition: background 1s;
+}
+
+#hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.heart {
+    position: absolute;
+    color: #a66bd1;
+    opacity: .6;
+    animation: float 8s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0) rotate(-8deg); }
+    50% { transform: translateY(-24px) rotate(8deg); }
+}
+
+.stage {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    font-size: clamp(22px,4vw,34px);
+    font-weight: normal;
+}
+
+.hint {
+    font: 14px Arial;
+    opacity: .7;
+    margin-bottom: 35px;
+}
+
+/* GIFT */
+
+.gift {
+    width: 180px;
+    height: 150px;
+    position: relative;
+    margin: auto;
+    cursor: pointer;
+    transition: transform .3s;
+}
+
+.gift:hover {
+    transform: translateY(-5px);
+}
+
+.box {
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    width: 150px;
+    height: 105px;
+    background: linear-gradient(135deg,#c69ae8,#a875d2);
+    border: 2px solid #8e5bb4;
+    border-radius: 8px;
+}
+
+.box::before {
+    content: "";
+    position: absolute;
+    left: 58px;
+    width: 30px;
+    height: 100%;
+    background: #f6e6ff;
+}
+
+.lid {
+    position: absolute;
+    top: 32px;
+    left: 4px;
+    width: 172px;
+    height: 32px;
+    background: #d8b4f3;
+    border: 2px solid #8e5bb4;
+    border-radius: 7px;
+    z-index: 2;
+    transform-origin: left bottom;
+    transition: transform .8s;
+}
+
+.bow {
+    position: absolute;
+    top: 7px;
+    left: 70px;
+    width: 40px;
+    height: 25px;
+    border: 5px solid #f8eaff;
+    border-radius: 50%;
+    z-index: 3;
+}
+
+.tag {
+    position: absolute;
+    right: 17px;
+    bottom: 15px;
+    color: white;
+    font-size: 25px;
+    z-index: 3;
+}
+
+.gift.open .lid {
+    transform: translate(-15px,-58px) rotate(-25deg);
+}
+
+/* ENVELOPE */
+
+.envelope {
+    display: none;
+    margin: 25px auto;
+    width: 170px;
+    height: 115px;
+    background: #fff5ff;
+    border: 2px solid #b78bd8;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 10px 25px #8e5bb433;
+}
+
+.envelope::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #e9d2fa;
+    clip-path: polygon(0 0,100% 0,50% 60%);
+}
+
+.envelope span {
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    right: 0;
+    font-size: 25px;
+}
+
+/* LETTER */
+
+#paper {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #fffdf8;
+    color: #55445c;
+    z-index: 10;
+    overflow-y: auto;
+    transform: scale(.2);
+    opacity: 0;
+    transition: transform 1s, opacity .8s;
+    padding: 8vh 9vw;
+}
+
+#paper.show {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.paper-inner {
+    max-width: 760px;
+    margin: auto;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.paper-title {
+    font-size: clamp(24px,5vw,38px);
+    color: #9868b4;
+    margin-bottom: 24px;
+}
+
+#typed {
+    font-size: clamp(17px,2.6vw,23px);
+    line-height: 1.9;
+    white-space: pre-wrap;
+    min-height: 220px;
+}
+
+.signature {
+    text-align: right;
+    font-size: 22px;
+    margin-top: 25px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.signature.visible {
+    opacity: 1;
+}
+
+/* PEN */
+
+.pen {
+    position: fixed;
+    z-index: 12;
+    font-size: 35px;
+    left: 10%;
+    top: 20%;
+    transform: rotate(-35deg);
+    transition: opacity .5s;
+}
+
+/* MOBILE */
+
+@media(max-width:500px) {
+    #paper {
+        padding: 7vh 8vw;
+    }
+
+    .paper-inner {
+        min-height: 85vh;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="hearts"></div>
+
+<main class="stage" id="intro">
+    <div>
+        <h1>something special for you ♡</h1>
+        <div class="hint">tap the little gift to open it</div>
+
+        <div class="gift" id="gift">
+            <div class="lid"></div>
+            <div class="bow"></div>
+            <div class="box"></div>
+            <div class="tag">♡</div>
+        </div>
+
+        <div class="envelope" id="env">
+            <span>💌</span>
+        </div>
+
+        <div class="hint" id="nextHint" style="display:none">
+            and one tiny letter… tap it ♡
+        </div>
+    </div>
+</main>
+
+<section id="paper">
+    <div class="paper-inner">
+        <div class="paper-title">hallooo, Aisyah ♡</div>
+        <div id="typed"></div>
+        <div class="signature" id="sign">—radit.</div>
+    </div>
+</section>
+
+<div class="pen" id="pen">🖊️</div>
+
+<script>
+const gift = document.querySelector('#gift');
+const env = document.querySelector('#env');
+const hint = document.querySelector('#nextHint');
+const paper = document.querySelector('#paper');
+const pen = document.querySelector('#pen');
+const typed = document.querySelector('#typed');
+const sign = document.querySelector('#sign');
+
+let opened = false;
+
+// OPEN GIFT
+gift.addEventListener('click', () => {
+    if (opened) return;
+
+    opened = true;
+    gift.classList.add('open');
+
+    setTimeout(() => {
+        env.style.display = 'block';
+        hint.style.display = 'block';
+    }, 650);
+});
+
+// OPEN LETTER
+env.addEventListener('click', () => {
+    document.body.style.background = '#fffdf8';
+    paper.style.display = 'block';
+
+    requestAnimationFrame(() => {
+        paper.classList.add('show');
+    });
+
+    setTimeout(writeLetter, 900);
+});
+
+// LETTER TEXT
+const message = `hallooo aisyah lucu imut gemes manis nan mempesona, saking mempesonanya sampe terlalu perfect, gimana hari ini?? cerita dongg, aku suka tau denger cerita kamu, aku suka bgt denger suara kamu, kamu tu kenapa gemes bgt sii wkwk, makasi uda dateng ke kehidupan aku walaupun cara datengnya rada random, love u.`;
+
+function writeLetter() {
+    let i = 0;
+
+    const interval = setInterval(() => {
+        typed.textContent = message.slice(0, i++);
+
+        pen.style.left =
+            Math.min(78,10 + (i/message.length)*68) + '%';
+
+        pen.style.top =
+            Math.min(75,20 + (i/message.length)*48) + '%';
+
+        if (i > message.length) {
+            clearInterval(interval);
+
+            pen.style.opacity = 0;
+
+            setTimeout(() => {
+                sign.classList.add('visible');
+            }, 400);
+        }
+    }, 42);
+}
+
+// FLOATING HEARTS
+const hearts = document.querySelector('#hearts');
+
+for (let i = 0; i < 24; i++) {
+    const h = document.createElement('span');
+
+    h.className = 'heart';
+    h.textContent = Math.random() > .35 ? '♡' : '♥';
+
+    h.style.left = Math.random() * 100 + '%';
+    h.style.top = Math.random() * 100 + '%';
+
+    h.style.fontSize = (10 + Math.random() * 16) + 'px';
+
+    h.style.animationDelay = (-Math.random() * 8) + 's';
+    h.style.animationDuration = (7 + Math.random() * 6) + 's';
+
+    hearts.appendChild(h);
+}
+</script>
+
+</body>
+</html>
